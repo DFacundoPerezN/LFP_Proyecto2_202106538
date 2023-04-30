@@ -11,15 +11,16 @@ def buscarArchivo(textBox1):
     textBox1.insert(0,ruta)
 
 def nuevoArchivo(espacio, nombreArchivo='Archivo.lfp'):
-    espacio=espacio.replace(' ','')
-    espacio=espacio.replace('\n','')
-    print(espacio)
-    if(espacio!=""):
+    info=espacio.get("1.0", "end")
+    #print(espacio)
+    if(info.replace('\n','')!=""):
         option=input('¿Desea guardar el archivo que estaba editando? \n1. Para si, cualquier otra para no>>')
 
         if(option=='1'):
             nombreArchivo=input('Ingrese nombre y direccion para guardar el archivo>>')
-            Guardar.guardar(espacio, nombreArchivo)
+            Guardar.guardar(info, nombreArchivo)  
+            
+    espacio.delete("1.0", "end")
 
 def abrirArchivo(espacio, ruta):
     espacio.delete("1.0", "end")
@@ -50,11 +51,15 @@ def generarMongoDB(data,espacio):
     espacio.delete("1.0", "end")
     tablaErrores=Errores.revisarErrores(data)
     lineas=str(tablaErrores)
-    salida=Compilar.compilar(data)
     #print('Lineas: ',len(lineas))
     if len(lineas)>231:
         salida=('Hay errores en el archivo')
-        Compilar.compilar(data)
+        try:
+            Compilar.compilar(data)
+        except:
+            print('Hay errores en el archivo')
+    else:        
+        salida=Compilar.compilar(data)
     espacio.insert("insert", salida)
 
 
@@ -93,19 +98,19 @@ def abrirWindowMA():
     button0= tk.Button(windowP, text ="Buscar Archivo" ,  command=lambda: buscarArchivo(textBox1) , bg="#f9ca24") #Boton de Buscar Archivo
     button0.grid(row=0,column=4)
 
-    button1= tk.Button(windowP, text ="Nuevo Archivo", command=lambda: nuevoArchivo(textArea1.get("1.0", "end"), textBox1.get()), bg="#686de0") 
+    button1= tk.Button(windowP, text ="Nuevo Archivo", command=lambda: nuevoArchivo(textArea1, textBox1.get()), bg="#686de0") 
     button1.grid(row=1,column=1, padx=5,pady=5)
 
     button2= tk.Button(windowP, text ="Abrir Archivo", command=lambda: abrirArchivo(textArea1, textBox1.get()), bg="#686de0") #Abre el Archivo para poder editarlo
     button2.grid(row=1,column=2, padx=5,pady=5)
 
-    button3= tk.Button(windowP, text ="Guardar Archivo", command=lambda: guardarArchivo(textArea1.get("1.0", "end")), bg="#686de0") #Guarda el archivo
+    button3= tk.Button(windowP, text ="Guardar Archivo", command=lambda: guardarArchivo(textArea1.get("1.0", "end"),textBox1.get()), bg="#686de0") #Guarda el archivo
     button3.grid(row=1,column=4, padx=5,pady=5)
 
     textBox2 = tk.Entry(windowP)  
     textBox2.grid(row=1,column=6)
 
-    button5= tk.Button(windowP, text ="Guardar Archivo Como: ", command=lambda: guardarArchivo(textArea1.get("1.0", "end"), textBox2.get()) , bg="#686de0") #Guarda el Archivo con el nombre especificado
+    button5= tk.Button(windowP, text ="Guardar Entrada Archivo Como: ", command=lambda: guardarArchivo(textArea1.get("1.0", "end"), textBox2.get()) , bg="#686de0") #Guarda el Archivo con el nombre especificado
     button5.grid(row=1,column=5, padx=5,pady=5)
 
     button6= tk.Button(windowP, text ="Generar MongoDB",command=lambda: generarMongoDB(textArea1.get("1.0", "end"),textArea2), bg="#7ed6df") #Imprime la informacion presente en el archivo
@@ -117,8 +122,11 @@ def abrirWindowMA():
     button8= tk.Button(windowP, text ="Mostrar Errores",command=lambda: revisionErrores(textArea1.get("1.0", "end"),textArea2), bg="#7ed6df")   #Revisa los Errores del Archivo
     button8.grid(row=2,column=5, padx=10,pady=10)
 
-    button9= tk.Button(windowP, text ="Salir",command=windowP.destroy, bg="#ff6b6b")   #Botón de regresar
-    button9.grid(row=7,column=5)
+    button9= tk.Button(windowP, text ="Guardar Archivo Resultados", command=lambda: guardarArchivo(textArea2.get("1.0", "end"), textBox2.get().replace(".txt",".lfp")) , bg="#FDA7DF")
+    button9.grid(row=3,column=5, padx=5,pady=5)
+
+    button10= tk.Button(windowP, text ="Salir",command=windowP.destroy, bg="#ff6b6b")   #Botón de regresar
+    button10.grid(row=7,column=5)
 
     windowP.mainloop()
 abrirWindowMA()
