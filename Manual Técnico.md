@@ -173,5 +173,10 @@ def salida(listaComandos):
 |Asignación en JSon|:|:|
 |Json| formato Json|{id: valor, ...}|
 ## Metodo del árbol
+![imagen](https://user-images.githubusercontent.com/98927736/235448944-8586aa18-a55e-4568-8a46-805b13c4c45d.png)
+
 ## AFD del scanner léxico
+![imagen](https://user-images.githubusercontent.com/98927736/235448974-957d6ee8-6634-4ebf-bf6d-c06ebce347a1.png)
+
 ## Gramática libre de contexto del scanner sintático
+![imagen](https://user-images.githubusercontent.com/98927736/235448995-9274f743-53b6-43cc-b27c-69e080bf98f5.png)
