@@ -65,7 +65,7 @@ def generarMongoDB(data,espacio):
 
 def abrirWindowMA():
     windowP = tk.Tk()
-    windowP.title("Menu Archivos")
+    windowP.title("Menu Archivos MongoDB")
     windowP.columnconfigure([0,16], minsize=100)
     windowP.rowconfigure([0,8], minsize=100)
     windowP.configure(background="#9980FA")
@@ -87,7 +87,7 @@ def abrirWindowMA():
     textArea2.grid(row=4,column=4, padx=5,pady=5)
 
     def llamado(event):
-        x,y=textArea1.index(tk.INSERT).split(".")
+        x,y=textArea1.index(tk.INSERT).split(".") 
         posicion=(f"Linea: {x}, Columna: {y}")
         label2 = tk.Label(windowP, text=posicion , bg="#9980FA")
         label2.grid(row=4,column=2)
